@@ -27,7 +27,7 @@ module Rails::Etcs
 
       require 'erb'
 
-      data = YAML.safe_load(ERB.new(yaml.read).result) || {}
+      data = YAML.safe_load(ERB.new(yaml.read).result, [], [], true) || {}
       data.fetch(env, {})
     rescue Psych::SyntaxError => e
       raise <<~ERR
