@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 
-require 'bundler/setup'
-require 'rails/etcs'
-
+ENV['RAILS_ENV'] = 'test'
 ENV['XDG_CONFIG_DIRS'] = '/etc/xdg:/etc:spec/static/config'
 
-STDOUT.puts "Rails.env: #{Rails.env}"
+require 'bundler/setup'
+require 'rails/etcs'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
