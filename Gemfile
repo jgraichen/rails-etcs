@@ -9,4 +9,5 @@ gemspec
 
 gem 'appraisal'
 gem 'rake'
+gem 'rake-release'
 gem 'rspec', '~> 3.0'
