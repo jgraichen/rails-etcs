@@ -5,6 +5,8 @@ require 'rails/etcs'
 
 ENV['XDG_CONFIG_DIRS'] = '/etc/xdg:/etc:spec/static/config'
 
+STDOUT.puts "Rails.env: #{Rails.env}"
+
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
   config.example_status_persistence_file_path = 'spec/examples.txt'
