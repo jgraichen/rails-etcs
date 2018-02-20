@@ -6,6 +6,10 @@ ENV['XDG_CONFIG_DIRS'] = '/etc/xdg:/etc:spec/static/config'
 require 'bundler/setup'
 require 'rails/etcs'
 
+class Application < ::Rails::Etcs::Application
+  self.ident = 'rails-etcs'
+end
+
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
   config.example_status_persistence_file_path = 'spec/examples.txt'
