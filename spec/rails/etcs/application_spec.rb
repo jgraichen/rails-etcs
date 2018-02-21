@@ -26,6 +26,13 @@ RSpec.describe Rails::Etcs::Application do
         expect(app.config_for('missing', quiet: true)).to be nil
       end
     end
+
+    context 'with block' do
+      it 'yields config data' do
+        expect {|b| app.config_for('existing', &b) }
+          .to yield_with_args('key' => 'value')
+      end
+    end
   end
 
   describe '#secrets' do

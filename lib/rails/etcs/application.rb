@@ -28,6 +28,7 @@ module Rails::Etcs
 
     # rubocop:disable AbcSize
     # rubocop:disable MethodLength
+    # rubocop:disable CyclomaticComplexity
     def config_for(name, env: Rails.env, quiet: false)
       files = paths['config']
               .expanded
@@ -43,8 +44,11 @@ module Rails::Etcs
       require 'erb'
 
       data = YAML.safe_load(ERB.new(yaml.read).result, [], [], true) || {}
+      data = env ? data.fetch(env, {}) : data
 
-      env ? data.fetch(env, {}) : data
+      yield data if block_given?
+
+      data
     rescue Psych::SyntaxError => e
       raise <<~ERR
         YAML syntax error occurred while parsing #{yaml}.
