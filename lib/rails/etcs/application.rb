@@ -28,7 +28,7 @@ module Rails::Etcs
 
     # rubocop:disable AbcSize
     # rubocop:disable MethodLength
-    def config_for(name, env: Rails.env)
+    def config_for(name, env: Rails.env, quiet: false)
       files = paths['config']
               .expanded
               .map {|d| Pathname.new(d).join("#{name}.yml") }
@@ -36,6 +36,7 @@ module Rails::Etcs
       yaml = files.find(&:exist?)
 
       unless yaml
+        return if quiet
         raise "Could not load configuration. No such file - #{files.join(', ')}"
       end
 

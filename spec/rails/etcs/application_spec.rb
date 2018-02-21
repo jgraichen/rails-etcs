@@ -20,6 +20,12 @@ RSpec.describe Rails::Etcs::Application do
           'test' => {'key' => 'value'}
       end
     end
+
+    context 'with quiet: true' do
+      it 'returns nil if not found' do
+        expect(app.config_for('missing', quiet: true)).to be nil
+      end
+    end
   end
 
   describe '#secrets' do
