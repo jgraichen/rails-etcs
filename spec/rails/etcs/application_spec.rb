@@ -12,6 +12,14 @@ RSpec.describe Rails::Etcs::Application do
     it 'find matching files' do
       expect(app.config_for('existing')).to eq 'key' => 'value'
     end
+
+    context 'with env: false' do
+      it 'returns full configuration file' do
+        expect(app.config_for('existing', env: false)).to eq \
+          'common' => {'key' => 'value'},
+          'test' => {'key' => 'value'}
+      end
+    end
   end
 
   describe '#secrets' do
