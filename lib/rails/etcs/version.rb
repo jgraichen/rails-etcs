@@ -6,7 +6,7 @@ module Rails
       MAJOR = 0
       MINOR = 1
       PATCH = 0
-      STAGE = :beta2
+      STAGE = :beta3
 
       STRING = [MAJOR, MINOR, PATCH, STAGE].reject(&:nil?).join('.').freeze
 
