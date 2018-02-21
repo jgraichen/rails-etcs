@@ -267,19 +267,32 @@ RSpec.describe Rails::Etcs::Application::Configuration do
     describe 'config/secrets' do
       subject { config.paths['config/secrets'] }
 
-      it do
-        expect(subject.to_ary)
-          .to eq %W[
-            #{home}/.config/#{ident}
-            /etc/xdg/#{ident}
-            /etc/#{ident}
-            #{static}
-            config
-          ]
+      constraint rails: '< 5.1' do
+        it do
+          expect(subject.to_ary)
+            .to eq %W[#{static}/secrets.yml]
+        end
+
+        it 'should have no glob' do
+          expect(subject.glob).to eq nil
+        end
       end
 
-      it 'should have "secrets.yml{,.enc}" glob' do
-        expect(subject.glob).to eq 'secrets.yml{,.enc}'
+      constraint rails: '>= 5.1' do
+        it do
+          expect(subject.to_ary)
+            .to eq %W[
+              #{home}/.config/#{ident}
+              /etc/xdg/#{ident}
+              /etc/#{ident}
+              #{static}
+              config
+            ]
+        end
+
+        it 'should have "secrets.yml{,.enc}" glob' do
+          expect(subject.glob).to eq 'secrets.yml{,.enc}'
+        end
       end
 
       it 'should not be eager loaded' do

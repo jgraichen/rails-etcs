@@ -13,4 +13,10 @@ RSpec.describe Rails::Etcs::Application do
       expect(app.config_for('existing')).to eq 'key' => 'value'
     end
   end
+
+  describe '#secrets' do
+    it 'loads secrets' do
+      expect(Rails.application.secrets).to include secret: true
+    end
+  end
 end

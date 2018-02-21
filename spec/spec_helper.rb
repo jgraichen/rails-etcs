@@ -6,8 +6,24 @@ ENV['XDG_CONFIG_DIRS'] = '/etc/xdg:/etc:spec/static/config'
 require 'bundler/setup'
 require 'rails/etcs'
 
-class Application < ::Rails::Etcs::Application
+require 'pry'
+require 'pry-byebug'
+
+class Application < ::Rails::Application
+  include ::Rails::Etcs::Application
+
   self.ident = 'rails-etcs'
+end
+
+module Constraint
+  def constraint(**kwargs)
+    yield if kwargs.each_pair.all? {|k, v| send(k, v) }
+  end
+
+  def rails(values)
+    Gem::Requirement.new(*Array(values)).satisfied_by? \
+      Gem::Version.new(Rails.version)
+  end
 end
 
 RSpec.configure do |config|
@@ -20,4 +36,6 @@ RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end
+
+  config.extend Constraint
 end

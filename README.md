@@ -10,13 +10,14 @@ If you cannot install the gem alone you should better not use it.
 
 ### Rails::Etcs::Application
 
-`Rails::Etcs::Application` can be used instead of `Rails::Application` when creating your own applications:
+`Rails::Etcs::Application` can be included when creating your application:
 
 ```ruby
 # my-app/config/application.rb
 
 module MyApp
-  class Application < ::Rails::Etcs::Application
+  class Application < ::Rails::Application
+    include ::Rails::Etcs::Application
     self.ident = 'my-app'
   end
 end

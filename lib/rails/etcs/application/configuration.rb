@@ -2,7 +2,7 @@
 
 require 'xdg'
 
-class Rails::Etcs::Application
+module Rails::Etcs::Application
   class Configuration < ::Rails::Application::Configuration
     attr_reader :ident
 
@@ -46,6 +46,15 @@ class Rails::Etcs::Application
         paths.add 'config/secrets',
           with: paths['config'],
           glob: 'secrets.yml{,.enc}'
+
+        if Gem::Requirement.new('< 5.1') =~ Gem::Version.new(Rails.version)
+          # Rails < 5.1 does not check for existing secrets file but just
+          # uses the first path even if it does not exist.
+          #
+          # This workaround fixes that by pre-expanding the path with only
+          # existing files.
+          paths.add 'config/secrets', with: paths['config/secrets'].existent
+        end
 
         paths['config'].to_ary.reverse.each do |dir|
           paths['config/initializers'] << File.join(dir, 'initializers')

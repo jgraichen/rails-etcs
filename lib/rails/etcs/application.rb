@@ -1,8 +1,22 @@
 # frozen_string_literal: true
 
 module Rails::Etcs
-  class Application < ::Rails::Application
+  module Application
+    extend ActiveSupport::Concern
+
     require 'rails/etcs/application/configuration'
+
+    included do
+      attr_writer :ident
+
+      def ident
+        @ident ||= begin
+          self.class.name.underscore
+              .gsub(/[^A-z]+/, '-')
+              .gsub(/-application$/, '')
+        end
+      end
+    end
 
     def config
       @config ||= begin
@@ -38,15 +52,5 @@ module Rails::Etcs
       ERR
     end
     # rubocop:enable all
-
-    class << self
-      attr_writer :ident
-
-      def ident
-        @ident ||= begin
-          name.underscore.gsub(/[^A-z]+/, '-').gsub(/-application$/, '')
-        end
-      end
-    end
   end
 end

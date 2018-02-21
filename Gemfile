@@ -11,3 +11,6 @@ gem 'appraisal'
 gem 'rake'
 gem 'rake-release'
 gem 'rspec', '~> 3.0'
+
+gem 'pry'
+gem 'pry-byebug'
