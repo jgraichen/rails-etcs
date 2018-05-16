@@ -2,10 +2,6 @@
 
 A collection of patches and alternatives for Rails core classes.
 
-## Installation
-
-If you cannot install the gem alone you should better not use it.
-
 ## Usage
 
 ### Rails::Etcs::Application
