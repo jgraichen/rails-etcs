@@ -8,6 +8,6 @@ gem "rake-release"
 gem "rspec", "~> 3.0"
 gem "pry"
 gem "pry-byebug"
-gem "rails", "~> 5.2.0.rc"
+gem "rails", "~> 5.2.0"
 
 gemspec path: "../"
